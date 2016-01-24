@@ -1,5 +1,8 @@
 package io.neson.react.notification;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.SystemClock;
 import android.app.PendingIntent;
@@ -112,10 +115,14 @@ public class Notification {
     public android.app.Notification build() {
         android.app.Notification.Builder notificationBuilder = new android.app.Notification.Builder(context);
 
+        int largeIconResourceId = context.getResources().getIdentifier(attributes.largeIcon, "mipmap", context.getPackageName());
+        Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), largeIconResourceId);
+
         notificationBuilder
             .setContentTitle(attributes.subject)
             .setContentText(attributes.message)
             .setSmallIcon(context.getResources().getIdentifier(attributes.smallIcon, "mipmap", context.getPackageName()))
+            .setLargeIcon(largeIcon)
             .setAutoCancel(attributes.autoClear)
             .setContentIntent(getContentIntent());
 
